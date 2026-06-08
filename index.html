@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EngliKids 🌟</title>
+  <title>EngliKids 🦉 — Mulai Belajar!</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap"
+    rel="stylesheet" />
 
   <script>
     tailwind.config = {
@@ -14,16 +16,16 @@
         extend: {
           fontFamily: {
             fredoka: ['Fredoka One', 'cursive'],
-            nunito:  ['Nunito', 'sans-serif'],
+            nunito: ['Nunito', 'sans-serif'],
           },
           colors: {
-            sunny:  '#FFD93D',
-            coral:  '#FF6B6B',
-            mint:   '#6BCB77',
-            sky:    '#4DA8DA',
+            sunny: '#FFD93D',
+            coral: '#FF6B6B',
+            mint: '#6BCB77',
+            sky: '#4DA8DA',
             purple: '#A06CD5',
-            peach:  '#FFA07A',
-            cream:  '#FFF8EC',
+            peach: '#FFA07A',
+            cream: '#FFF8EC',
           },
         },
       },
@@ -32,571 +34,555 @@
 
   <style>
     :root {
-      --coral: #FF6B6B; --sunny: #FFD93D; --mint: #6BCB77;
-      --sky: #4DA8DA; --purple: #A06CD5; --peach: #FFA07A; --cream: #FFF8EC;
+      --coral: #FF6B6B;
+      --sunny: #FFD93D;
+      --mint: #6BCB77;
+      --sky: #4DA8DA;
+      --purple: #A06CD5;
+      --peach: #FFA07A;
+      --cream: #FFF8EC;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Nunito', sans-serif;
-      background-color: #FFF8EC;
-      background-image: radial-gradient(circle, #FFD93D44 2px, transparent 2px);
-      background-size: 32px 32px;
-    }
-    .bubble {
-      position: fixed; border-radius: 50%; opacity: 0.18;
-      pointer-events: none; z-index: 0;
+      background: linear-gradient(160deg, #FF9A44 0%, #FF6B6B 40%, #c84b8a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ── Mic button recording state ── */
-    #btn-mic.recording, #btn-mic-susun.recording {
-      animation: wiggle 0.5s ease-in-out infinite, pulseMic 1.2s ease-in-out infinite;
-      background: linear-gradient(135deg, #FF6B6B, #FF4444) !important;
-    }
-    #btn-mic.recording .mic-icon, #btn-mic-susun.recording .mic-icon { display: none; }
-    #btn-mic.recording .stop-icon, #btn-mic-susun.recording .stop-icon { display: flex; }
-
-    /* ── CSS Keyframes ── */
-    @keyframes wiggle {
-      0%,100% { transform: rotate(-4deg) scale(1.02); }
-      50%      { transform: rotate(4deg) scale(1.02); }
-    }
-    @keyframes pulseMic {
-      0%,100% { box-shadow: 0 0 0 0 rgba(255,107,107,0.6), 0 8px 0 #cc3a3a, 0 16px 40px rgba(255,107,107,0.45); }
-      50%      { box-shadow: 0 0 0 18px rgba(255,107,107,0), 0 8px 0 #cc3a3a, 0 16px 40px rgba(255,107,107,0.45); }
-    }
-    @keyframes popIn {
-      0%   { transform: scale(0.5); opacity: 0; }
-      70%  { transform: scale(1.1); }
-      100% { transform: scale(1);   opacity: 1; }
-    }
-    @keyframes float {
-      0%,100% { transform: translateY(0px); }
-      50%      { transform: translateY(-10px); }
-    }
-    @keyframes starPop {
-      0%   { transform: scale(0) rotate(-30deg); opacity: 0; }
-      60%  { transform: scale(1.3) rotate(10deg); opacity: 1; }
-      100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-    @keyframes slideUp {
-      from { transform: translateY(60px); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
-    @keyframes confetti {
-      from { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-      to   { transform: translateY(300px) rotate(720deg); opacity: 0; }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes correctPop {
-      0%   { transform: scale(1); }
-      30%  { transform: scale(1.08); }
-      100% { transform: scale(1); }
+    /* ── Floating bubbles bg ── */
+    .bg-bubble {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+      animation: floatBubble linear infinite;
     }
 
-    .animate-float  { animation: float 3s ease-in-out infinite; }
-    .animate-popIn  { animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-    .animate-slideUp{ animation: slideUp 0.4s ease-out forwards; }
-    .star-item { opacity: 0; }
-    .star-item.active { animation: starPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-    .dot-active   { background: #FF6B6B; transform: scale(1.3); }
-    .dot-done     { background: #6BCB77; }
-    .dot-inactive { background: #e5e7eb; }
+    @keyframes floatBubble {
+      0% {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 0;
+      }
 
-    #modal-skor { transition: opacity 0.3s ease, visibility 0.3s ease; }
-    #modal-skor.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    #modal-skor:not(.hidden) { opacity: 1; visibility: visible; }
+      10% {
+        opacity: 0.12;
+      }
 
-    #card-gambar { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    #card-gambar:hover { transform: rotate(-1deg) scale(1.02); }
+      90% {
+        opacity: 0.12;
+      }
 
-    /* ── WAVEFORM (Real Canvas DSP) ── */
-    #waveform-canvas {
-      display: none;
-      border-radius: 1rem;
-      background: linear-gradient(135deg, #FF6B6B22, #4DA8DA22);
-    }
-    #waveform-canvas.active { display: block; }
-
-    /* ── CSS wave bar fallback ── */
-    .wave-bar {
-      width: 6px; border-radius: 9999px;
-      background: var(--coral);
-      animation: waveAnim 0.8s ease-in-out infinite;
-    }
-    .wave-bar:nth-child(1) { animation-delay: 0.0s; height: 12px; }
-    .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 24px; }
-    .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 36px; }
-    .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 24px; }
-    .wave-bar:nth-child(5) { animation-delay: 0.4s; height: 12px; }
-    @keyframes waveAnim {
-      0%,100% { transform: scaleY(1); }
-      50%      { transform: scaleY(2); }
+      100% {
+        transform: translateY(-20vh) scale(1.1);
+        opacity: 0;
+      }
     }
 
-    /* ── Voice transcript ── */
-    #voice-transcript {
-      animation: fadeIn 0.3s ease;
-      border-left: 3px solid var(--coral);
-    }
-
-    /* ── Matching / Pilihan ganda ── */
-    .pilihan-btn {
-      width: 100%;
-      padding: 14px 18px;
-      border-radius: 1.25rem;
-      border: 2.5px solid #e5e7eb;
+    /* ── Card ── */
+    .card {
       background: #fff;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #374151;
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18), 0 8px 0 rgba(0, 0, 0, 0.08);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ── Owl mascot bounce ── */
+    @keyframes owlBounce {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(3deg);
+      }
+    }
+
+    .owl-mascot {
+      animation: owlBounce 2.8s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    /* ── Star burst deco ── */
+    .star-deco {
+      position: absolute;
+      font-size: 1.6rem;
+      animation: starSpin 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes starSpin {
+
+      0%,
+      100% {
+        transform: rotate(-10deg) scale(1);
+      }
+
+      50% {
+        transform: rotate(10deg) scale(1.15);
+      }
+    }
+
+    /* ── Avatar selection ── */
+    .avatar-btn {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 3px solid #e5e7eb;
+      background: var(--cream);
+      font-size: 2rem;
       cursor: pointer;
-      transition: all 0.18s cubic-bezier(0.34,1.56,0.64,1);
-      text-align: left;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      position: relative;
     }
-    .pilihan-btn:hover:not(:disabled) {
-      border-color: var(--sky);
-      background: #f0f9ff;
-      transform: translateX(4px);
-    }
-    .pilihan-btn.benar {
-      border-color: var(--mint) !important;
-      background: #f0fdf4 !important;
-      color: #166534 !important;
-      animation: correctPop 0.4s ease;
-    }
-    .pilihan-btn.salah {
-      border-color: var(--coral) !important;
-      background: #fff1f0 !important;
-      color: #9b1c1c !important;
-    }
-    .pilihan-btn:disabled { cursor: not-allowed; opacity: 0.7; }
 
-    /* ── Susun Kata ── */
-    .kata-btn {
-      padding: 8px 16px;
-      background: #fff;
-      border: 2px solid #e5e7eb;
+    .avatar-btn:hover {
+      transform: scale(1.12);
+      border-color: var(--coral);
+    }
+
+    .avatar-btn.selected {
+      border-color: var(--coral);
+      background: #fff0f0;
+      box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.25);
+      transform: scale(1.18);
+    }
+
+    .avatar-btn.selected::after {
+      content: '✓';
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      width: 20px;
+      height: 20px;
+      background: var(--mint);
+      border-radius: 50%;
+      font-size: 0.65rem;
+      color: white;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    /* ── Kelas selection ── */
+    .kelas-btn {
+      width: 100%;
+      padding: 12px 16px;
       border-radius: 1rem;
+      border: 2.5px solid #e5e7eb;
+      background: #FAFAFA;
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
       color: #374151;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow: 0 4px 0 #e5e7eb;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .kata-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 #e5e7eb;
+
+    .kelas-btn:hover {
       border-color: var(--sky);
-    }
-    .kata-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 #e5e7eb;
-    }
-    .kata-btn.used {
-      opacity: 0.4;
-      pointer-events: none;
-      box-shadow: 0 2px 0 #e5e7eb;
-      transform: translateY(2px);
+      background: #f0f9ff;
     }
 
-    /* ── Confetti ── */
-    .confetti-piece {
-      position: absolute; width: 10px; height: 10px;
-      border-radius: 2px;
-      animation: confetti 1.5s ease-out forwards;
+    .kelas-btn.selected {
+      border-color: var(--sky);
+      background: #e0f2fe;
+      box-shadow: 0 0 0 4px rgba(77, 168, 218, 0.25);
     }
 
-    /* ── Avatar header ── */
-    .avatar-display {
-      width: 42px; height: 42px;
-      border-radius: 50%;
-      background: white;
-      border: 2.5px solid var(--sunny);
-      display: flex; align-items: center; justify-content: center;
+    /* ── Name input ── */
+    .name-input {
+      width: 100%;
+      padding: 14px 20px 14px 52px;
+      border: 2.5px solid #e5e7eb;
+      border-radius: 1.25rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #374151;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #FAFAFA;
+    }
+
+    .name-input:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15);
+      background: #fff;
+    }
+
+    /* ── Start button ── */
+    .btn-start {
+      width: 100%;
+      padding: 18px;
+      border-radius: 1.5rem;
+      font-family: 'Fredoka One', cursive;
       font-size: 1.4rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      letter-spacing: 0.03em;
+      color: white;
+      background: linear-gradient(135deg, #FF6B6B, #FFA07A);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #cc3a3a, 0 12px 30px rgba(255, 107, 107, 0.4);
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* ── Section transition ── */
-    .soal-section { animation: fadeIn 0.35s ease; }
+    .btn-start::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+      border-radius: inherit;
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 #cc3a3a, 0 16px 35px rgba(255, 107, 107, 0.45);
+    }
+
+    .btn-start:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #cc3a3a, 0 6px 20px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-start:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── Security badge ── */
+    .security-badge {
+      background: linear-gradient(90deg, #e6f9ee, #e6f4fb);
+      border: 1.5px solid #b7e4c7;
+      border-radius: 1rem;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #2d7a4f;
+    }
+
+    /* ── Slide in animation ── */
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .slide-up-2 {
+      animation: slideUp 0.5s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .slide-up-3 {
+      animation: slideUp 0.5s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* ── Error shake ── */
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20%,
+      60% {
+        transform: translateX(-8px);
+      }
+
+      40%,
+      80% {
+        transform: translateX(8px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    /* ── Top bar icon emojis ── */
+    .topbar-icon {
+      font-size: 1.5rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+      animation: topbarFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes topbarFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center justify-start py-6 px-4 relative overflow-x-hidden">
+<body class="min-h-screen flex flex-col items-center justify-center py-8 px-4">
 
-  <!-- Dekorasi bubble -->
-  <div class="bubble w-64 h-64 bg-yellow-300" style="top:-60px;left:-60px;"></div>
-  <div class="bubble w-48 h-48 bg-red-300"    style="bottom:80px;right:-40px;"></div>
-  <div class="bubble w-32 h-32 bg-green-300"  style="top:200px;right:20px;"></div>
-  <div class="bubble w-24 h-24 bg-purple-300" style="bottom:200px;left:10px;"></div>
+  <!-- Floating background bubbles -->
+  <div class="bg-bubble w-48 h-48 bg-white" style="left:-5%;animation-duration:12s;animation-delay:0s;"></div>
+  <div class="bg-bubble w-32 h-32 bg-yellow-300" style="left:60%;animation-duration:9s;animation-delay:3s;"></div>
+  <div class="bg-bubble w-24 h-24 bg-green-300" style="left:30%;animation-duration:14s;animation-delay:6s;"></div>
+  <div class="bg-bubble w-40 h-40 bg-purple-300" style="left:80%;animation-duration:11s;animation-delay:1.5s;"></div>
 
-  <!-- ── HEADER ── -->
-  <header class="relative z-10 text-center mb-4 animate-slideUp w-full max-w-md">
-    <div class="flex items-center justify-between px-1 mb-2">
-      <!-- Avatar + Nama -->
-      <div class="flex items-center gap-2">
-        <div class="avatar-display" id="header-avatar">🦉</div>
-        <div>
-          <p class="font-nunito font-800 text-sm text-gray-700" id="header-nama">Anak</p>
-          <p class="font-nunito font-600 text-xs text-gray-400">Pejuang Bahasa!</p>
-        </div>
-      </div>
-      <!-- Skor live -->
-      <div class="bg-white rounded-2xl px-4 py-2 shadow border border-sunny">
-        <p class="font-nunito font-600 text-xs text-gray-400 leading-none">Skor</p>
-        <p class="font-fredoka text-2xl leading-none" style="color:#6BCB77;" id="skor-live">0</p>
-      </div>
+  <!-- Star deco -->
+  <div class="star-deco" style="top:8%;left:5%;">⭐</div>
+  <div class="star-deco" style="top:12%;right:8%;animation-delay:1s;">✨</div>
+  <div class="star-deco" style="bottom:12%;left:7%;animation-delay:2s;">🌟</div>
+  <div class="star-deco" style="bottom:8%;right:5%;animation-delay:0.5s;">⭐</div>
+
+  <!-- Top emoji bar -->
+  <div class="flex gap-4 mb-5 z-10 slide-up">
+    <span class="topbar-icon" style="animation-delay:0s;">⭐</span>
+    <span class="topbar-icon" style="animation-delay:0.3s;">⭐</span>
+    <span class="topbar-icon" style="animation-delay:0.6s;">⭐</span>
+    <span class="topbar-icon" style="animation-delay:0.9s;">⭐</span>
+    <span class="topbar-icon" style="animation-delay:1.2s;">⭐</span>
+    <span class="topbar-icon" style="animation-delay:1.5s;">⭐</span>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="card w-full max-w-sm px-8 py-8 slide-up-2">
+
+    <!-- Mascot + Title -->
+    <div class="text-center mb-6">
+      <div class="text-7xl mb-2 owl-mascot">🐧</div>
+      <h1 class="font-fredoka text-5xl leading-none" style="background:linear-gradient(135deg,#FF6B6B,#FFD93D,#6BCB77,#4DA8DA);
+                 -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+                 background-clip:text;filter:drop-shadow(2px 3px 0 rgba(0,0,0,0.1));">
+        EnglishKu
+      </h1>
+      <p class="font-nunito font-700 text-sm text-gray-400 mt-1 tracking-wide uppercase">
+        Worksheet Interaktif Bahasa Inggris SD
+      </p>
     </div>
 
-    <div class="text-4xl mb-0.5 inline-block animate-float">🐧</div>
-    <h1 class="font-fredoka text-5xl leading-none"
-        style="background:linear-gradient(135deg,#FF6B6B,#FFD93D,#6BCB77,#4DA8DA);
-               -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-               background-clip:text;filter:drop-shadow(2px 3px 0 rgba(0,0,0,0.12));">
-      EngliKids
-    </h1>
-    <p class="font-nunito font-700 text-xs text-sky mt-0.5 tracking-widest uppercase">
-      Belajar Bahasa Inggris itu Seru! 🎉
+    <!-- Nama -->
+    <div class="mb-4">
+      <label class="font-nunito font-800 text-sm text-gray-600 mb-1.5 block">
+        Nama Kamu 👤
+      </label>
+      <div class="relative">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xl pointer-events-none">✏️</span>
+        <input id="input-nama" type="text" class="name-input" placeholder="Tulis namamu di sini..." maxlength="30"
+          autocomplete="off" />
+      </div>
+      <p id="error-nama" class="text-coral text-xs font-700 mt-1.5 hidden">
+        ⚠️ Nama tidak boleh kosong ya!
+      </p>
+    </div>
+
+    <!-- Pilih Avatar -->
+    <div class="mb-6">
+      <label class="font-nunito font-800 text-sm text-gray-600 mb-3 block">
+        Pilih Avatarmu 🎭
+      </label>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <button class="avatar-btn" data-avatar="🦁" onclick="pilihAvatar(this, '🦁')" title="Singa">🦁</button>
+        <button class="avatar-btn" data-avatar="🐯" onclick="pilihAvatar(this, '🐯')" title="Harimau">🐯</button>
+        <button class="avatar-btn" data-avatar="🐸" onclick="pilihAvatar(this, '🐸')" title="Katak">🐸</button>
+        <button class="avatar-btn" data-avatar="🐧" onclick="pilihAvatar(this, '🐧')" title="Pinguin">🐧</button>
+        <button class="avatar-btn" data-avatar="🦊" onclick="pilihAvatar(this, '🦊')" title="Rubah">🦊</button>
+      </div>
+      <p id="error-avatar" class="text-coral text-xs font-700 mt-2 text-center hidden">
+        ⚠️ Pilih avatar dulu ya!
+      </p>
+    </div>
+
+    <!-- Pilih Kelas -->
+    <div class="mb-6">
+      <label class="font-nunito font-800 text-sm text-gray-600 mb-3 block">
+        Pilih Kelasmu 📚
+      </label>
+      <div class="flex flex-col gap-2">
+        <button class="kelas-btn" data-kelas="1-2" onclick="pilihKelas(this, '1-2')">
+          <span class="font-800">Kelas 1-2</span> <span class="font-600 text-sm text-gray-400">(Dasar)</span>
+        </button>
+        <button class="kelas-btn" data-kelas="3-4" onclick="pilihKelas(this, '3-4')">
+          <span class="font-800">Kelas 3-4</span> <span class="font-600 text-sm text-gray-400">(Menengah)</span>
+        </button>
+        <button class="kelas-btn" data-kelas="5-6" onclick="pilihKelas(this, '5-6')">
+          <span class="font-800">Kelas 5-6</span> <span class="font-600 text-sm text-gray-400">(Lanjutan)</span>
+        </button>
+      </div>
+      <p id="error-kelas" class="text-coral text-xs font-700 mt-2 text-center hidden">
+        ⚠️ Pilih kelas dulu ya!
+      </p>
+    </div>
+
+    <!-- Start Button -->
+    <button id="btn-mulai" class="btn-start" onclick="handleMulai()">
+      Mulai Belajar! 🚀
+    </button>
+
+    <p class="font-nunito text-xs text-gray-400 text-center mt-3">
+      Semangat belajar &amp; raih bintang terbanyak! ⭐
     </p>
-  </header>
-
-  <!-- ── PROGRESS ── -->
-  <div class="relative z-10 flex items-center gap-2 mb-4">
-    <span class="font-nunito font-800 text-sm text-gray-500">Soal</span>
-    <div id="progress-dots" class="flex gap-2"></div>
-    <span id="label-nomor-soal" class="font-nunito font-800 text-sm text-gray-500">1 / 8</span>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       AREA SOAL UCAPKAN
-  ═══════════════════════════════════════════ -->
-  <main id="section-ucapkan" class="relative z-10 w-full max-w-md flex flex-col items-center gap-4 soal-section">
+  <!-- JS security.js untuk hash -->
+  <script>
+    // ── Inline minimal security (hashPassword) ──────────────
+    // (full security.js dimuat di index.html)
+    async function hashPasswordSimple(str) {
+      if (!window.crypto || !window.crypto.subtle) return str;
+      const enc = new TextEncoder();
+      const buf = await window.crypto.subtle.digest('SHA-256', enc.encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-    <!-- Kartu gambar/kata -->
-    <div id="card-gambar"
-         class="w-full bg-white rounded-[2.5rem] shadow-2xl border-4 border-sunny p-5 flex flex-col items-center gap-3"
-         style="box-shadow:0 12px 40px rgba(255,107,107,0.15),6px 6px 0 #FFD93D;">
+    // ── RLE compress ──────────────────────────────────────────
+    function compressRLE(text) {
+      if (!text) return '';
+      const hasil = [];
+      let i = 0;
+      while (i < text.length) {
+        const c = text[i]; let n = 1;
+        while (i + n < text.length && text[i + n] === c) n++;
+        hasil.push(n, c);
+        i += n;
+      }
+      return hasil.join('|');
+    }
 
-      <div id="badge-kategori"
-           class="self-start px-4 py-1 rounded-full font-nunito font-800 text-xs uppercase tracking-widest text-white"
-           style="background:linear-gradient(90deg,#FF6B6B,#FFA07A);">
-        BUAH
-      </div>
+    // ── State ─────────────────────────────────────────────────
+    let avatarTerpilih = '';
+    let kelasTerpilih = '';
 
-      <!-- Gambar atau Emoji -->
-      <div class="relative w-48 h-48 rounded-2xl overflow-hidden bg-cream flex items-center justify-center">
-        <img id="gambar-soal" src="" alt="" class="w-44 h-44 object-contain animate-float select-none" />
-        <span id="emoji-soal" class="text-8xl select-none animate-float hidden"></span>
-      </div>
+    function pilihAvatar(btn, emoji) {
+      document.querySelectorAll('.avatar-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      avatarTerpilih = emoji;
+      document.getElementById('error-avatar').classList.add('hidden');
+    }
 
-      <div class="text-center">
-        <p class="font-nunito font-600 text-sm text-gray-400 mb-0.5">Nama gambar ini adalah...</p>
-        <h2 id="teks-kata" class="font-fredoka text-5xl tracking-wide" style="color:#FF6B6B;text-shadow:2px 3px 0 #FFD93D44;">
-          Apple
-        </h2>
-        <p id="teks-terjemahan" class="font-nunito font-700 text-base text-gray-400 mt-1">(Apel)</p>
-      </div>
+    function pilihKelas(btn, kelas) {
+      document.querySelectorAll('.kelas-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      kelasTerpilih = kelas;
+      document.getElementById('error-kelas').classList.add('hidden');
+    }
 
-      <button id="btn-dengar" onclick="handleDengarkan()"
-              class="flex items-center gap-2 px-6 py-3 rounded-2xl font-nunito font-800 text-white text-base
-                     transition-all duration-150 active:scale-95 hover:brightness-110 hover:-translate-y-0.5 shadow-lg"
-              style="background:linear-gradient(135deg,#4DA8DA,#A06CD5);box-shadow:0 4px 0 #2e6fa0,0 8px 20px rgba(77,168,218,0.35);">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-          <path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-        </svg>
-        Dengarkan
-      </button>
-    </div>
+    // ── Validasi & pindah ke index.html ──────────────────────
+    async function handleMulai() {
+      const namaEl = document.getElementById('input-nama');
+      const errNama = document.getElementById('error-nama');
+      const errAvatar = document.getElementById('error-avatar');
+      const errKelas = document.getElementById('error-kelas');
+      const nama = namaEl.value.trim();
+      let valid = true;
 
-    <!-- Instruksi -->
-    <div class="text-center w-full">
-      <p id="teks-instruksi" class="font-nunito font-700 text-gray-500 text-base">
-        Tekan tombol di bawah, lalu ucapkan kata tersebut! 🎙️
-      </p>
+      if (!nama) {
+        errNama.classList.remove('hidden');
+        namaEl.classList.add('shake');
+        setTimeout(() => namaEl.classList.remove('shake'), 400);
+        valid = false;
+      } else {
+        errNama.classList.add('hidden');
+      }
 
-      <!-- ══ DSP WAVEFORM CANVAS (real-time dari AudioAnalyser) ══ -->
-      <div class="mt-3 flex flex-col items-center gap-2">
-        <canvas id="waveform-canvas" width="280" height="60"></canvas>
+      if (!avatarTerpilih) {
+        errAvatar.classList.remove('hidden');
+        valid = false;
+      } else {
+        errAvatar.classList.add('hidden');
+      }
 
-        <!-- CSS bars fallback (saat rekam, sebelum canvas siap) -->
-        <div id="waveform-bars" class="hidden items-center justify-center gap-1.5 h-10">
-          <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-          <div class="wave-bar"></div><div class="wave-bar"></div>
-        </div>
-      </div>
+      if (!kelasTerpilih) {
+        errKelas.classList.remove('hidden');
+        valid = false;
+      } else {
+        errKelas.classList.add('hidden');
+      }
 
-      <!-- ══ VOICE TRANSCRIPT ══ -->
-      <div id="voice-transcript"
-           class="hidden mt-3 mx-4 px-4 py-3 rounded-xl bg-white shadow text-left"
-           style="border-left:3px solid var(--coral);">
-        <p class="font-nunito font-600 text-xs text-gray-400 mb-1">📝 Transkripsi suaramu:</p>
-        <p id="transcript-text" class="font-nunito font-700 text-base text-gray-700 italic">"..."</p>
-        <div id="transcript-match" class="mt-1.5 flex items-center gap-1.5 hidden">
-          <span id="match-icon" class="text-lg">✅</span>
-          <span id="match-text" class="font-nunito font-700 text-sm"></span>
-        </div>
-      </div>
-    </div>
+      if (!valid) return;
 
-    <!-- Tombol Mikrofon -->
-    <button id="btn-mic" onclick="handleMic()"
-            class="relative w-28 h-28 rounded-full flex items-center justify-center
-                   shadow-2xl transition-all duration-200 active:scale-95 hover:-translate-y-1"
-            style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);
-                   box-shadow:0 8px 0 #cc3a3a,0 16px 40px rgba(255,107,107,0.45);">
-      <div class="absolute inset-0 rounded-full border-4 border-white opacity-30 scale-110"></div>
-      <div class="absolute inset-0 rounded-full border-4 border-white opacity-15 scale-125"></div>
-      <div class="mic-icon flex flex-col items-center justify-center gap-0.5">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-        </svg>
-        <span class="font-nunito font-800 text-white text-xs -mt-1">Bicara!</span>
-      </div>
-      <div class="stop-icon hidden flex-col items-center justify-center gap-0.5">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-white" viewBox="0 0 24 24" fill="currentColor">
-          <rect x="6" y="6" width="12" height="12" rx="2"/>
-        </svg>
-        <span class="font-nunito font-800 text-white text-xs">Stop</span>
-      </div>
-    </button>
-    <p class="font-nunito text-xs text-gray-400 -mt-2">Tekan &amp; ucapkan</p>
+      // Hash nama untuk keamanan (SHA-256)
+      const namaHash = await hashPasswordSimple(nama + '_englikids_v2');
+      // Kompresi profil (RLE)
+      const profilStr = `${nama}|${avatarTerpilih}|${kelasTerpilih}|${new Date().toISOString()}`;
+      const profilKompresi = compressRLE(profilStr);
 
-    <button onclick="handleLewati()"
-            class="font-nunito font-700 text-sm text-gray-400 hover:text-coral transition-colors underline underline-offset-2">
-      Lewati soal ini →
-    </button>
-  </main>
+      // Simpan ke sessionStorage (bukan localStorage agar hilang saat tab ditutup)
+      const profil = {
+        nama,
+        avatar: avatarTerpilih,
+        kelas: kelasTerpilih,
+        namaHash: namaHash.slice(0, 16) + '...',
+        profilKompresi,
+        waktuMulai: new Date().toISOString(),
+      };
+      sessionStorage.setItem('englikids_profil', JSON.stringify(profil));
 
-  <!-- ══════════════════════════════════════════
-       AREA SOAL COCOKKAN (Pilihan Ganda)
-  ═══════════════════════════════════════════ -->
-  <section id="section-cocokkan"
-           class="hidden relative z-10 w-full max-w-md flex flex-col items-center gap-4 soal-section">
+      // Animasi tombol sebelum pindah
+      const btn = document.getElementById('btn-mulai');
+      btn.textContent = 'Siap! ✨';
+      btn.disabled = true;
+      btn.style.background = 'linear-gradient(135deg, #6BCB77, #4DA8DA)';
 
-    <!-- Kartu pertanyaan matching -->
-    <div class="w-full bg-white rounded-[2.5rem] shadow-2xl border-4 border-sky p-6 flex flex-col items-center gap-3"
-         style="box-shadow:0 12px 40px rgba(77,168,218,0.2),6px 6px 0 #4DA8DA;">
+      setTimeout(() => {
+        window.location.href = 'game.html';
+      }, 700);
+    }
 
-      <div id="badge-cocokkan"
-           class="self-start px-4 py-1 rounded-full font-nunito font-800 text-xs uppercase tracking-widest text-white"
-           style="background:linear-gradient(90deg,#4DA8DA,#A06CD5);">
-        COCOKKAN KATA
-      </div>
+    // ── Enter key support ─────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('input-nama').addEventListener('keypress', e => {
+        if (e.key === 'Enter') handleMulai();
+      });
 
-      <!-- Emoji / gambar kata -->
-      <div class="relative w-32 h-32 rounded-2xl bg-cream flex items-center justify-center mt-1">
-        <span id="cocokkan-emoji" class="text-7xl select-none animate-float">🐕</span>
-        <img id="cocokkan-gambar" src="" alt="" class="hidden w-28 h-28 object-contain animate-float" />
-      </div>
-
-      <!-- Kata yang ditanya -->
-      <div class="text-center">
-        <p class="font-nunito font-600 text-sm text-gray-400 mb-0.5">Apa arti kata ini dalam Bahasa Indonesia?</p>
-        <h2 id="cocokkan-kata" class="font-fredoka text-5xl tracking-wide" style="color:#4DA8DA;">Dog</h2>
-      </div>
-    </div>
-
-    <!-- Pilihan jawaban -->
-    <div id="container-pilihan" class="w-full flex flex-col gap-3">
-      <!-- Diisi JS -->
-    </div>
-
-    <!-- Feedback matching -->
-    <div id="feedback-cocokkan" class="hidden w-full px-4 py-3 rounded-2xl text-center font-nunito font-800 text-base text-white">
-    </div>
-
-    <button onclick="handleLewati()"
-            class="font-nunito font-700 text-sm text-gray-400 hover:text-coral transition-colors underline underline-offset-2">
-      Lewati soal ini →
-    </button>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       AREA SOAL SUSUN KATA
-  ═══════════════════════════════════════════ -->
-  <section id="section-susun-kata"
-           class="hidden relative z-10 w-full max-w-md flex flex-col items-center gap-4 soal-section">
-
-    <div class="w-full bg-white rounded-[2.5rem] shadow-2xl border-4 border-mint p-6 flex flex-col items-center gap-3"
-         style="box-shadow:0 12px 40px rgba(107,203,119,0.2),6px 6px 0 #6BCB77;">
-
-      <div id="badge-susun-kata"
-           class="self-start px-4 py-1 rounded-full font-nunito font-800 text-xs uppercase tracking-widest text-white"
-           style="background:linear-gradient(90deg,#6BCB77,#4DA8DA);">
-        SUSUN KALIMAT
-      </div>
-
-      <div class="relative w-24 h-24 rounded-2xl bg-cream flex items-center justify-center mt-1">
-        <span id="susun-kata-emoji" class="text-6xl select-none animate-float">🧩</span>
-      </div>
-
-      <div class="text-center w-full">
-        <p class="font-nunito font-600 text-sm text-gray-400 mb-0.5">Apa arti kalimat ini dalam Bahasa Inggris?</p>
-        <h2 id="susun-kata-terjemahan" class="font-fredoka text-2xl tracking-wide" style="color:#6BCB77;">Terjemahan</h2>
-      </div>
-
-      <!-- Tempat jawaban (Drop Area) -->
-      <div id="area-jawaban" class="w-full min-h-[60px] bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-2 flex flex-wrap gap-2 justify-center items-center mt-2">
-      </div>
-      
-      <p id="susun-kata-instruksi" class="font-nunito font-700 text-xs text-gray-400 text-center mt-1">
-        Klik kata di bawah untuk menyusun kalimat!
-      </p>
-
-      <!-- Pilihan kata acak -->
-      <div id="area-pilihan-kata" class="w-full flex flex-wrap gap-2 justify-center mt-2">
-      </div>
-      
-      <div id="feedback-susun-kata" class="hidden w-full px-4 py-3 rounded-2xl text-center font-nunito font-800 text-base text-white mt-2">
-      </div>
-    </div>
-
-    <!-- AREA MIC UNTUK SUSUN KATA (Muncul setelah benar) -->
-    <div id="area-mic-susun-kata" class="hidden w-full flex-col items-center gap-3 mt-2">
-      <p class="font-nunito font-800 text-coral text-center text-lg">
-        Hebat! Sekarang coba ucapkan! 🎙️
-      </p>
-      
-      <div class="flex flex-col items-center gap-2">
-        <canvas id="waveform-canvas-susun" width="280" height="60" class="hidden rounded-xl" style="background: linear-gradient(135deg, #FF6B6B22, #4DA8DA22);"></canvas>
-        <div id="waveform-bars-susun" class="hidden items-center justify-center gap-1.5 h-10">
-          <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-          <div class="wave-bar"></div><div class="wave-bar"></div>
-        </div>
-      </div>
-
-      <!-- VOICE TRANSCRIPT SUSUN -->
-      <div id="voice-transcript-susun"
-           class="hidden mt-2 mx-4 px-4 py-3 rounded-xl bg-white shadow text-left"
-           style="border-left:3px solid var(--coral);">
-        <p class="font-nunito font-600 text-xs text-gray-400 mb-1">📝 Transkripsi suaramu:</p>
-        <p id="transcript-text-susun" class="font-nunito font-700 text-base text-gray-700 italic">"..."</p>
-        <div id="transcript-match-susun" class="mt-1.5 flex items-center gap-1.5 hidden">
-          <span id="match-icon-susun" class="text-lg">✅</span>
-          <span id="match-text-susun" class="font-nunito font-700 text-sm"></span>
-        </div>
-      </div>
-
-      <button id="btn-mic-susun" onclick="handleMic()"
-              class="relative w-24 h-24 rounded-full flex items-center justify-center mt-2
-                     shadow-2xl transition-all duration-200 active:scale-95 hover:-translate-y-1"
-              style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);
-                     box-shadow:0 8px 0 #cc3a3a,0 16px 40px rgba(255,107,107,0.45);">
-        <div class="absolute inset-0 rounded-full border-4 border-white opacity-30 scale-110"></div>
-        <div class="mic-icon flex flex-col items-center justify-center gap-0.5">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-          </svg>
-          <span class="font-nunito font-800 text-white text-[10px] -mt-1">Bicara!</span>
-        </div>
-        <div class="stop-icon hidden flex-col items-center justify-center gap-0.5">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="6" y="6" width="12" height="12" rx="2"/>
-          </svg>
-          <span class="font-nunito font-800 text-white text-[10px]">Stop</span>
-        </div>
-      </button>
-      <p id="teks-instruksi-susun" class="font-nunito text-xs text-gray-400">Tekan & ucapkan</p>
-    </div>
-
-    <button onclick="handleLewati()"
-            class="font-nunito font-700 text-sm text-gray-400 hover:text-coral transition-colors underline underline-offset-2 mt-4">
-      Lewati soal ini →
-    </button>
-  </section>
-
-  <!-- ══════════════════════════════════════════
-       MODAL SKOR AKHIR
-  ═══════════════════════════════════════════ -->
-  <div id="modal-skor"
-       class="hidden fixed inset-0 z-50 flex items-center justify-center p-4"
-       style="background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);">
-    <div id="modal-panel"
-         class="relative w-full max-w-sm bg-white rounded-[2.5rem] p-8 flex flex-col items-center gap-4
-                shadow-2xl border-4 border-sunny overflow-hidden"
-         style="box-shadow:0 20px 60px rgba(255,107,107,0.3),8px 8px 0 #FFD93D;">
-
-      <div id="konfeti-container" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
-
-      <!-- Avatar besar di modal -->
-      <div id="modal-avatar" class="text-6xl animate-popIn">🏆</div>
-
-      <h2 class="font-fredoka text-4xl text-center" style="color:#FF6B6B;text-shadow:2px 2px 0 #FFD93D55;">
-        Hebat Sekali!
-      </h2>
-      <p class="font-nunito font-600 text-gray-500 text-center text-sm -mt-2">
-        Kamu sudah menyelesaikan semua soal!
-      </p>
-
-      <div class="flex flex-col items-center gap-1 bg-cream rounded-2xl px-10 py-4 border-2 border-sunny">
-        <span class="font-nunito font-700 text-sm text-gray-400 uppercase tracking-widest">Total Skor</span>
-        <span id="skor-angka" class="font-fredoka text-6xl" style="color:#6BCB77;">0</span>
-        <span id="skor-dari" class="font-nunito font-600 text-sm text-gray-400">dari 800 poin</span>
-      </div>
-
-      <div class="flex gap-2 items-center">
-        <span id="star-1" class="star-item text-4xl">⭐</span>
-        <span id="star-2" class="star-item text-5xl">⭐</span>
-        <span id="star-3" class="star-item text-4xl">⭐</span>
-      </div>
-
-      <p id="pesan-motivasi"
-         class="font-nunito font-700 text-center text-base px-4 py-2 rounded-2xl text-white"
-         style="background:linear-gradient(135deg,#6BCB77,#4DA8DA);">
-        Luar biasa! 🚀
-      </p>
-
-      <!-- Riwayat skor singkat -->
-      <div id="riwayat-mini" class="hidden w-full bg-cream rounded-2xl px-4 py-3 border border-yellow-200">
-        <p class="font-nunito font-700 text-xs text-gray-500 mb-2 uppercase tracking-widest">📊 Skor Terakhir</p>
-        <div id="riwayat-list" class="flex flex-col gap-1"></div>
-      </div>
-
-      <div class="flex flex-col w-full gap-3 mt-2">
-        <button onclick="handleMainLagi()"
-                class="w-full py-3.5 rounded-2xl font-nunito font-800 text-white text-lg
-                       transition-all active:scale-95 hover:-translate-y-0.5 hover:brightness-110"
-                style="background:linear-gradient(135deg,#FF6B6B,#FFA07A);
-                       box-shadow:0 4px 0 #cc3a3a,0 10px 25px rgba(255,107,107,0.35);">
-          🔄 Main Lagi!
-        </button>
-        <button onclick="handleLihatRiwayat()"
-                class="w-full py-3 rounded-2xl font-nunito font-700 text-sky text-base border-2 border-sky
-                       transition-all active:scale-95 hover:bg-sky hover:text-white">
-          📊 Lihat Riwayat Skor
-        </button>
-        <a href="landing.html"
-           class="w-full py-3 rounded-2xl font-nunito font-700 text-gray-400 text-base border-2 border-gray-200
-                  transition-all active:scale-95 hover:border-gray-400 text-center block">
-          🏠 Halaman Utama
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── TOAST ── -->
-  <div id="toast"
-       class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none
-              font-nunito font-800 text-white text-base px-6 py-3 rounded-2xl shadow-xl
-              opacity-0 transition-opacity duration-300"
-       style="background:linear-gradient(135deg,#6BCB77,#4DA8DA);">
-    Mantap! 🎉
-  </div>
-
-  <!-- ── SCRIPTS ── -->
-  <script src="js/security.js"></script>
-  <script src="js/dsp.js"></script>
-  <script src="js/main.js"></script>
+      // Cek jika sudah ada profil sebelumnya
+      const profilLama = sessionStorage.getItem('englikids_profil');
+      if (profilLama) {
+        try {
+          const p = JSON.parse(profilLama);
+          if (p.nama) document.getElementById('input-nama').value = p.nama;
+          if (p.avatar) {
+            const avatarBtn = document.querySelector(`[data-avatar="${p.avatar}"]`);
+            if (avatarBtn) pilihAvatar(avatarBtn, p.avatar);
+          }
+          if (p.kelas) {
+            const kelasBtn = document.querySelector(`[data-kelas="${p.kelas}"]`);
+            if (kelasBtn) pilihKelas(kelasBtn, p.kelas);
+          }
+        } catch (e) { }
+      }
+    });
+  </script>
 </body>
+
 </html>
