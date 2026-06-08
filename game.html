@@ -430,18 +430,29 @@
   <!-- ── HEADER ── -->
   <header class="relative z-10 text-center mb-4 animate-slideUp w-full max-w-md">
     <div class="flex items-center justify-between px-1 mb-2">
+      <!-- Tombol Keluar -->
+      <a href="index.html" 
+         class="flex items-center justify-center w-10 h-10 bg-white rounded-2xl shadow border-2 border-gray-200 text-gray-400 hover:text-coral hover:border-coral transition-all active:scale-95"
+         title="Keluar">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </a>
+
       <!-- Avatar + Nama -->
       <div class="flex items-center gap-2">
         <div class="avatar-display" id="header-avatar">🦉</div>
-        <div>
+        <div class="text-left">
           <p class="font-nunito font-800 text-sm text-gray-700" id="header-nama">Anak</p>
           <p class="font-nunito font-600 text-xs text-gray-400">Pejuang Bahasa!</p>
         </div>
       </div>
       <!-- Skor live -->
-      <div class="bg-white rounded-2xl px-4 py-2 shadow border border-sunny">
+      <div class="bg-white rounded-2xl px-3 py-1.5 shadow border border-sunny">
         <p class="font-nunito font-600 text-xs text-gray-400 leading-none">Skor</p>
-        <p class="font-fredoka text-2xl leading-none" style="color:#6BCB77;" id="skor-live">0</p>
+        <p class="font-fredoka text-xl leading-none" style="color:#6BCB77;" id="skor-live">0</p>
       </div>
     </div>
 
